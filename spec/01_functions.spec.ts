@@ -1,5 +1,6 @@
-import { isEven } from './utils';
-describe('functions', () => {
+import { isEven, formatter, identity, jesseDecorator } from './utils';
+// tslint:disable-next-line: no-unused-expression
+describe; ('functions', () => {
     describe('parameters to functions', () => {
 
         it('overloading in javaScript', () => {
@@ -137,4 +138,26 @@ describe('functions', () => {
             });
 
         });
+        describe('some more higher order functions', () => {
+            describe('a function that takes a function as an argument', () => {
+                it('a kind of decorator', () => {
+                    const response = formatter('Hello World!', identity);
+                    expect(response).toBe('HELLO_WORLD!');
+
+                    const response2 = formatter('Hello World!');
+                    expect(response2).toBe('HELLO_WORLD!');
+
+                    const jesseresponse = formatter('Hello World!', (s) => `***${s}***`);
+                    expect(jesseresponse).toBe('***HELLO_WORLD!***');
+
+                    const bangSurround = jesseDecorator('!');
+                    const jr2 = formatter('Hello World!', bangSurround);
+                    expect(jr2).toBe('!!!HELLO_WORLD!!!!');
+
+                    const jr3 = formatter('Hello World!', jesseDecorator('@'));
+                    expect(jr3).toBe('@@@HELLO_WORLD!@@@');
+                });
+            });
+        });
     });
+});
