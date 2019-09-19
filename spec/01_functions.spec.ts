@@ -1,6 +1,6 @@
 import { isEven, formatter, identity, jesseDecorator } from './utils';
 // tslint:disable-next-line: no-unused-expression
-describe; ('functions', () => {
+describe('functions', () => {
     describe('parameters to functions', () => {
 
         it('overloading in javaScript', () => {
@@ -136,8 +136,8 @@ describe; ('functions', () => {
                 });
 
             });
-
         });
+
         describe('some more higher order functions', () => {
             describe('a function that takes a function as an argument', () => {
                 it('a kind of decorator', () => {
@@ -159,5 +159,59 @@ describe; ('functions', () => {
                 });
             });
         });
+
+        describe('making elements with various techniques', () => {
+            it('straight-ahead procedural programming', () => {
+
+                function tagMaker(tag: string, content: string) {
+                    return `<${tag}>${content}</${tag}>`;
+                }
+
+                expect(tagMaker('h1', 'Hello')).toBe('<h1>Hello</h1>');
+                expect(tagMaker('h1', 'Dog')).toBe('<h1>Dog</h1>');
+                expect(tagMaker('h1', 'Cat')).toBe('<h1>Cat</h1>');
+                expect(tagMaker('p', 'Mouse')).toBe('<p>Mouse</p>');
+            });
+            it('doing it with objects', () => {
+
+                class TagMaker {
+
+
+                    constructor(private tag: string) { }
+
+                    make(content: string) {
+                        return `<${this.tag}>${content}</${this.tag}>`;
+                    }
+
+                }
+
+                const h1Maker = new TagMaker('h1');
+                const pMaker = new TagMaker('p');
+
+
+                expect(h1Maker.make('Hello')).toBe('<h1>Hello</h1>');
+                expect(h1Maker.make('Dog')).toBe('<h1>Dog</h1>');
+                expect(h1Maker.make('Cat')).toBe('<h1>Cat</h1>');
+                expect(pMaker.make('Mouse')).toBe('<p>Mouse</p>');
+
+            });
+
+            it('a functional approach', () => {
+
+                function tagMaker(tag: string) {
+                    return (content: string) => `<${tag}>${content}</${tag}>`;
+                }
+
+                const h1Maker = tagMaker('h1');
+                const pMaker = tagMaker('p');
+
+                expect(h1Maker('Hello')).toBe('<h1>Hello</h1>');
+                expect(h1Maker('Dog')).toBe('<h1>Dog</h1>');
+                expect(h1Maker('Cat')).toBe('<h1>Cat</h1>');
+                expect(pMaker('Mouse')).toBe('<p>Mouse</p>');
+                expect(tagMaker('h2')('Tacos')).toBe('<h2>Tacos</h2>');
+            });
+        });
+
     });
 });
